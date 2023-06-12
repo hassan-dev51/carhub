@@ -2,11 +2,19 @@ import CarCard from "@/components/CarCard";
 import CustomFilter from "@/components/CustomFilter";
 import Hero from "@/components/Hero";
 import SearchBar from "@/components/SearchBar";
+import ShowMore from "@/components/ShowMore";
 import { fuels, yearsOfProduction } from "@/constants";
+import { HomeProps } from "@/types/types";
 import { fetchData } from "@/utils/fetchApiData";
 
-export default async function Home() {
-  const cars = await fetchData();
+export default async function Home({ searchParams }: HomeProps) {
+  const cars = await fetchData({
+    manufacturer: searchParams.manufacturer || "",
+    year: searchParams.year || 2022,
+    fuel: searchParams.fuel || "",
+    limit: searchParams.limit || 10,
+    model: searchParams.model || "",
+  });
   const isEmptyData = !Array.isArray(cars) || cars.length < 1 || !cars;
   return (
     <main className="overflow-hidden">
@@ -22,8 +30,8 @@ export default async function Home() {
           <SearchBar />
 
           <div className="home__filter-container">
-            {/* <CustomFilter title="fuel" options={fuels} />
-            <CustomFilter title="year" options={yearsOfProduction} /> */}
+            <CustomFilter title="fuel" options={fuels} />
+            <CustomFilter title="year" options={yearsOfProduction} />
           </div>
         </div>
         {isEmptyData ? (
@@ -38,6 +46,10 @@ export default async function Home() {
                 <CarCard car={car} key={index} />
               ))}
             </div>
+            <ShowMore
+              pageNumber={(searchParams.limit || 10) / 10}
+              isNext={(searchParams.limit || 10) > cars.length}
+            />
           </section>
         )}
       </div>
