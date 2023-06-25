@@ -17,6 +17,7 @@ const CarCard = ({ car }: CarCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const carRent = calculateCarRent(city_mpg, year);
+
   return (
     <div className="car-card group">
       <div className="car-card__content">

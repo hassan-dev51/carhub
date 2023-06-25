@@ -6,6 +6,7 @@ import ShowMore from "@/components/ShowMore";
 import { fuels, yearsOfProduction } from "@/constants";
 import { HomeProps } from "@/types/types";
 import { fetchData } from "@/utils/fetchApiData";
+import { useRouter } from "next/navigation";
 
 export default async function Home({ searchParams }: HomeProps) {
   const cars = await fetchData({
@@ -16,6 +17,7 @@ export default async function Home({ searchParams }: HomeProps) {
     model: searchParams.model || "",
   });
   const isEmptyData = !Array.isArray(cars) || cars.length < 1 || !cars;
+
   return (
     <main className="overflow-hidden">
       <Hero />

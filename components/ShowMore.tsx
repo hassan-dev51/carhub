@@ -11,6 +11,7 @@ const ShowMore = ({ pageNumber, isNext }: ShowMoreProps) => {
     const newPath = updateYearAndGasFilter("limit", `${newLimit}`);
 
     router.push(newPath);
+    router.refresh();
   };
   return (
     <div className="w-full flex-center gap-5 mt-10">
